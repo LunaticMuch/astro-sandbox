@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+	title: string;
+}
+
+// Infer collection from URL - it's always the first element of the array
+const collectionName = Astro.url.pathname.split('/')[1];
+
+// Retrieve collection data
+const allMenu = await getCollection('menu');
+const collectionMenu = allMenu.find((menu) => menu.id === collectionName);
+
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="flex">
+				<div class="w-64 bg-lime-200">
+					{
+						
+						collectionMenu.data.map((item) => {
+							if (item.children) {
+								return (<ul>{item.name}</ul>)
+							}
+							return <li><a href={item.slug}>{item.name}</a></li>
+						})
+					}
+				</div>
+				<div class="prose bg-slate-100 flex-1 max-w-none"><slot /></div>
+			</div>
+		</div>
+	</body>
+</html>

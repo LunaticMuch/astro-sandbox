@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Tutorial 1",
+        "slug": "tutorial-1-single-file"
+    },
+    {
+        "name": "Tutorial 2",
+        "slug":"tutorial-2",
+        "children": [
+            {
+                "name": "Lesson 1",
+                "slug": "lesson-1"
+            },
+            {
+                "name": "Lesson 2",
+                "slug": "lesson-2"
+            }
+        ]
+    }
+]
