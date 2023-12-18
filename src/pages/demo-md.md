@@ -42,6 +42,6 @@ console.log(add(1, 2))
 
 ## Aside Example
 
-:::tip[Did you know?]
-Astro helps you build faster websites with [“Islands Architecture”](https://docs.astro.build/en/concepts/islands/).
+:::tip[Tip title]
+Some tip content  
 :::
