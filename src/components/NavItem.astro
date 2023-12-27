@@ -1,5 +1,6 @@
 ---
 import NavItemGroup from '../components/NavItemGroup.astro';
+import NavItemBadge from './NavItemBadge.astro';
 const { item } = Astro.props;
 
 function isCurrentUrl(linkUrl: string): boolean {
@@ -12,7 +13,8 @@ function isCurrentUrl(linkUrl: string): boolean {
 		<NavItemGroup item={item} />
 	) : (
 		<div class={`hover:bg-pink-300 ${isCurrentUrl(item.link) && 'font-bold'}`}>
-			<a href={item.link}>{item.label}</a>{' '}
+			<a href={item.link}>{item.label}</a>
+			{item.badge && <NavItemBadge badge={item.badge} />}
 		</div>
 	)
 }

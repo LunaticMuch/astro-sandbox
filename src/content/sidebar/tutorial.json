@@ -9,7 +9,11 @@
     },
     {
         "label": "Tutorial 3",
-        "link": "/tutorial/tutorial-3"
+        "link": "/tutorial/tutorial-3",
+        "badge": {
+            "variant":"tip",
+            "text": "new"
+        }
     },
     {
         "label": "Group 1",

@@ -1,4 +1,5 @@
 ---
+import NavItemBadge from "./NavItemBadge.astro";
 const { item } = Astro.props;
 
 function isCurrentUrl(linkUrl: string): boolean {
@@ -45,7 +46,7 @@ function setChecked(item) {
 					<Astro.self item={i} />
 				) : (
 					<div class={`hover:bg-pink-300 ${isCurrentUrl(i.link) && 'font-bold'}`}>
-						<a href={i.link}>{i.label}</a>
+						<a href={i.link}>{i.label}</a>{item.badge && <NavItemBadge badge={item.badge} />}
 					</div>
 				)
 			)
