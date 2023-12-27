@@ -1,0 +1,12 @@
+---
+import NavItem from '../components/NavItem.astro';
+const { items } = Astro.props;
+---
+
+<nav>
+	{
+		items.map((item) => {
+			return <NavItem  item={item} />;
+		})
+	}
+</nav>

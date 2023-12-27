@@ -1,0 +1,18 @@
+---
+import NavItemGroup from '../components/NavItemGroup.astro';
+const { item } = Astro.props;
+
+function isCurrentUrl(linkUrl: string): boolean {
+	return Astro.url.pathname === linkUrl;
+}
+---
+
+{
+	item.items ? (
+		<NavItemGroup item={item} />
+	) : (
+		<div class={`hover:bg-pink-300 ${isCurrentUrl(item.link) && 'font-bold'}`}>
+			<a href={item.link}>{item.label}</a>{' '}
+		</div>
+	)
+}

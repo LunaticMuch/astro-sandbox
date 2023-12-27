@@ -1,19 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
-
+import {getSidebarFromCollectionIdentifier} from '../helpers/utils'
+import Sidebar  from "../components/Sidebar.astro"
 interface Props {
 	title: string;
+	collection: string
 }
-
-// Infer collection from URL - it's always the first element of the array
-const collectionName = Astro.url.pathname.split('/')[1];
-
-// Retrieve collection data
-const allMenu = await getCollection('menu');
-const collectionMenu = allMenu.find((menu) => menu.id === collectionName);
-
-
 const { title } = Astro.props;
+
+const items = await getSidebarFromCollectionIdentifier('tutorial')
 ---
 
 <!doctype html>
@@ -27,21 +21,8 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="flex">
-				<div class="w-64 bg-lime-200">
-					{
-						
-						collectionMenu.data.map((item) => {
-							if (item.children) {
-								return (<ul>{item.name}</ul>)
-							}
-							return <li><a href={item.slug}>{item.name}</a></li>
-						})
-					}
-				</div>
-				<div class="prose md:prose-xl bg-slate-100 flex-1 max-w-none"><slot /></div>
-			</div>
-		</div>
+		<div class="container mx-auto flex h-screen">
+			<div class="flex w-48 flex-col bg-slate-100"><Sidebar items={items} /></div>
+			<div class=" flex-1 bg-lime-100 prose"><slot /></div>
 	</body>
 </html>

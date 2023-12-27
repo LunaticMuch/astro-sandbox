@@ -1,0 +1,36 @@
+[
+    {
+        "label": "Tutorial 1",
+        "link": "/tutorial/tutorial-1-single-file"
+    },
+    {
+        "label": "Tutorial 2",
+        "link": "/tutorial/tutorial-2"
+    },
+    {
+        "label": "Tutorial 3",
+        "link": "/tutorial/tutorial-3"
+    },
+    {
+        "label": "Group 1",
+        "items": [
+            {
+                "label": "Tutorial 1-1",
+                "link": "/tutorial/group-1/tutorial-1-group-1"
+            },
+            {
+                "label": "Tutorial 1-2",
+                "link": "/tutorial/group-1/tutorial-2-group-1"
+            },
+            {
+                "label": "Group 1-1",
+                "items": [
+                    {
+                        "label": "Tutorial 1 Group 1-1",
+                        "link": "/tutorial/group-1/group-1-1/tutorial-1-group-1-group-1"
+                    }
+                ]
+            }
+        ]
+    }
+]

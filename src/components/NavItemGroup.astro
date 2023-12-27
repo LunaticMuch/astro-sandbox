@@ -1,0 +1,54 @@
+---
+const { item } = Astro.props;
+
+function isCurrentUrl(linkUrl: string): boolean {
+	return Astro.url.pathname === linkUrl;
+}
+
+// This function parses the URL pathname and return true if the URL is included somewhere in the nested object
+function deepFind(group, location) {
+    if (!Array.isArray(group)) group = [group]
+    const parseSlug = (o) => o.link === location
+    return group.some(item => item.items ? deepFind(item.items, location) : parseSlug(item))
+  }
+
+function setChecked(item) {
+	const currentPath = Astro.url.pathname;
+	return deepFind(item, currentPath);
+}
+---
+
+<label class="cursor-pointer">
+	<input
+		type="checkbox"
+		class="peer hidden cursor-pointer select-none rounded-lg bg-slate-500 ease-in-out"
+		checked={setChecked(item)}
+	/>
+	<div class="flex items-center justify-between group hover:bg-pink-300">
+		<span>{item.label}</span>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="currentColor"
+			class="h-4 w-4 group-[:checked+&]:rotate-90"
+		>
+			<path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"
+			></path></svg
+		>
+	</div>
+	<div class="relative hidden pl-4 peer-checked:block">
+		{
+			item.items.map((i) =>
+				i.items ? (
+					<Astro.self item={i} />
+				) : (
+					<div class={`hover:bg-pink-300 ${isCurrentUrl(i.link) && 'font-bold'}`}>
+						<a href={i.link}>{i.label}</a>
+					</div>
+				)
+			)
+		}
+	</div>
+</label>
