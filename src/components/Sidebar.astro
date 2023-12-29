@@ -1,11 +1,12 @@
 ---
 import NavItem from '../components/NavItem.astro';
 const { items } = Astro.props;
+import type { SidebarItem } from '../schemas/sidebar';
 ---
 
 <nav>
 	{
-		items.map((item) => {
+		items.map((item: SidebarItem) => {
 			return <NavItem  item={item} />;
 		})
 	}

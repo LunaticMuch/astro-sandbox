@@ -1,19 +1,29 @@
 ---
+import * as path from 'path';
 import NavItemBadge from "./NavItemBadge.astro";
+import type { SidebarItem } from '../schemas/sidebar';
 const { item } = Astro.props;
 
-function isCurrentUrl(linkUrl: string): boolean {
-	return Astro.url.pathname === linkUrl;
+// This function ensures any URL ends with just one trailing slash
+function sanitizePath(linkPath: string): string {
+	// Adds leading and traling slases, the normalize the result.
+	// Result is guaranteed to have the /a/b/c/d/ format
+	return path.normalize('/' + linkPath + '/')
+}
+
+// This function infers if the path on the URL is the same as in the sidebar links
+function iscurrentPath(linkPath: string): boolean {
+	return sanitizePath(Astro.url.pathname) === sanitizePath(linkPath);
 }
 
 // This function parses the URL pathname and return true if the URL is included somewhere in the nested object
-function deepFind(group, location) {
+function deepFind(group: any, location: string): boolean {
     if (!Array.isArray(group)) group = [group]
-    const parseSlug = (o) => o.link === location
-    return group.some(item => item.items ? deepFind(item.items, location) : parseSlug(item))
+    const parseSlug = (o: { items?: any; link?: any; } ) => o.link === location
+    return group.some((item: { items: any; }) => item.items ? deepFind(item.items, location) : parseSlug(item))
   }
 
-function setChecked(item) {
+function setChecked(item: SidebarItem[]) {
 	const currentPath = Astro.url.pathname;
 	return deepFind(item, currentPath);
 }
@@ -28,7 +38,7 @@ function setChecked(item) {
 	<div class="flex items-center justify-between group hover:bg-pink-300">
 		<span>{item.label}</span>
 		<svg
-			xmlns="http://www.w3.org/2000/svg"
+			xmlns="http://www: { items: any; link: string | URL | null | undefined; label: unknown; }: { items: any; link: string | URL | null | undefined; label: unknown; }.w3.org/2000/svg"
 			fill="none"
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
@@ -45,7 +55,7 @@ function setChecked(item) {
 				i.items ? (
 					<Astro.self item={i} />
 				) : (
-					<div class={`hover:bg-pink-300 ${isCurrentUrl(i.link) && 'font-bold'}`}>
+					<div class={`hover:bg-pink-300 ${iscurrentPath(i.link) && 'font-bold'}`}>
 						<a href={i.link}>{i.label}</a>{item.badge && <NavItemBadge badge={item.badge} />}
 					</div>
 				)
